@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="color-scheme" content="dark">
+  <title>Build-Fusion Results</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <p class="eyebrow">build-fusion benchmark viewer</p>
+        <h1>Fusion Results</h1>
+        <p class="sidebar-copy">
+          Model families, winning presets, long-context lanes, and the caveats
+          that matter before you promote them.
+        </p>
+      </div>
+
+      <label class="search-panel" for="family-search">
+        <span>Find a family or tier</span>
+        <input id="family-search" type="search" placeholder="Gemma, Qwen, APEX, reasoning...">
+      </label>
+
+      <section class="filter-panel" aria-labelledby="status-filter-label">
+        <p id="status-filter-label" class="panel-title">Status Filter</p>
+        <div id="status-filters" class="filter-row"></div>
+      </section>
+
+      <section class="nav-panel" aria-labelledby="family-nav-label">
+        <div class="panel-header">
+          <p id="family-nav-label" class="panel-title">Model Families</p>
+          <a href="#overview" class="mini-link">Back to top</a>
+        </div>
+        <nav id="family-nav" class="family-nav"></nav>
+      </section>
+
+      <section class="sidebar-note">
+        <p class="panel-title">Why this format</p>
+        <p>
+          The site reads from a single data file, so new benchmark runs can be
+          added without redesigning the page each time.
+        </p>
+      </section>
+    </aside>
+
+    <main class="content">
+      <header class="hero card" id="overview">
+        <div class="hero-copy">
+          <p class="eyebrow">custom llama.cpp runtime stack</p>
+          <h2 id="hero-title">Build-Fusion Results</h2>
+          <p id="hero-summary"></p>
+        </div>
+        <div id="summary-cards" class="summary-grid"></div>
+        <div id="hero-links" class="hero-links"></div>
+      </header>
+
+      <section class="card glossary-card" aria-labelledby="glossary-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">quick glossary</p>
+            <h2 id="glossary-title">How To Read The Results</h2>
+          </div>
+        </div>
+        <div id="glossary-grid" class="glossary-grid"></div>
+      </section>
+
+      <section class="card methodology-card" aria-labelledby="method-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">reporting rules</p>
+            <h2 id="method-title">Status Buckets Used On This Site</h2>
+          </div>
+        </div>
+        <div id="status-guide" class="status-guide"></div>
+      </section>
+
+      <section id="family-sections" class="family-sections"></section>
+    </main>
+  </div>
+
+  <noscript>
+    <div class="noscript-banner">
+      This results site needs JavaScript enabled to render the benchmark data.
+    </div>
+  </noscript>
+
+  <script src="./results-data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
