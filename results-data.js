@@ -1,3 +1,7 @@
+const FUSION_LIVE_MATRIX_URL = "https://github.com/charlie12345/fusion-build/blob/main/docs/FUSION_LIVE_MATRIX.md";
+const FUSION_MODEL_STATUS_URL = "https://github.com/charlie12345/fusion-build/blob/main/docs/FUSION_MODEL_STATUS.md";
+const FUSION_ROOT_README_URL = "https://github.com/charlie12345/fusion-build/blob/main/README.md";
+
 window.FUSION_RESULTS = {
   meta: {
     title: "Build-Fusion Results",
@@ -7,9 +11,9 @@ window.FUSION_RESULTS = {
     summary:
       "A browsable benchmark site for the custom fusion llama.cpp stack. It tracks real winners, long-context rescue lanes, fresh APEX-family results, and the edge-case failures that decide whether a preset is safe to promote.",
     links: [
-      { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-      { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" },
-      { label: "Root README", href: "../README.md" }
+      { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+      { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL },
+      { label: "Root README", href: FUSION_ROOT_README_URL }
     ]
   },
   statuses: [
@@ -94,8 +98,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
@@ -542,8 +546,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
@@ -832,8 +836,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
@@ -1245,8 +1249,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
@@ -1521,8 +1525,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
@@ -1816,8 +1820,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
@@ -2106,8 +2110,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
@@ -2404,8 +2408,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
@@ -2787,8 +2791,8 @@ window.FUSION_RESULTS = {
         }
       ],
       links: [
-        { label: "Fusion Live Matrix", href: "../FUSION_LIVE_MATRIX.md" },
-        { label: "Fusion Model Status", href: "../FUSION_MODEL_STATUS.md" }
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
       ],
       models: [
         {
