@@ -1,6 +1,6 @@
-const FUSION_LIVE_MATRIX_URL = "https://github.com/charlie12345/fusion-build/blob/main/docs/FUSION_LIVE_MATRIX.md";
-const FUSION_MODEL_STATUS_URL = "https://github.com/charlie12345/fusion-build/blob/main/docs/FUSION_MODEL_STATUS.md";
-const FUSION_ROOT_README_URL = "https://github.com/charlie12345/fusion-build/blob/main/README.md";
+const FUSION_LIVE_MATRIX_URL = "https://github.com/charlie12345/AI-Matrix/blob/main/FUSION_LIVE_MATRIX.md";
+const FUSION_MODEL_STATUS_URL = "https://github.com/charlie12345/AI-Matrix/blob/main/FUSION_MODEL_STATUS.md";
+const FUSION_ROOT_README_URL = "https://github.com/charlie12345/AI-Matrix/blob/main/FUSION_BUILD_README.md";
 
 window.FUSION_RESULTS = {
   meta: {
