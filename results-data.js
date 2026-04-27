@@ -6,7 +6,9 @@ window.FUSION_RESULTS = {
   meta: {
     title: "Build-Fusion Results",
     buildName: "build-fusion / llama-cpp-turboquant-google-nvfp4-fusionlab",
+    cpu: "Intel Core i5-8400 (6C / 6T)",
     gpu: "RTX 3060 12 GB",
+    ram: "46 GiB DDR4",
     updated: "2026-04-27",
     summary:
       "A browsable benchmark site for the custom fusion llama.cpp stack. It tracks real winners, long-context rescue lanes, fresh APEX-family results, and the edge-case failures that decide whether a preset is safe to promote.",

@@ -198,7 +198,22 @@
       {
         label: "Updated",
         value: data.meta.updated,
-        note: data.meta.gpu
+        note: "Latest public dashboard refresh"
+      },
+      {
+        label: "CPU",
+        value: data.meta.cpu || "n/a",
+        note: "Baseline host processor for these runs"
+      },
+      {
+        label: "GPU",
+        value: data.meta.gpu,
+        note: "Primary accelerator used for the matrix"
+      },
+      {
+        label: "System RAM",
+        value: data.meta.ram || "n/a",
+        note: "Host memory available to the runtime"
       },
       {
         label: "Model families",
@@ -219,11 +234,6 @@
         label: "Build label",
         value: data.meta.buildName,
         note: "The custom fusion fork being benchmarked"
-      },
-      {
-        label: "Experimental families",
-        value: String(experimentalCount),
-        note: "These are usable, but only after direct card-specific validation"
       }
     ];
 
