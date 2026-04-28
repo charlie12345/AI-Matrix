@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="color-scheme" content="dark">
-  <title>Nemotron 3 Nano 30B A3B MXFP4 MoE</title>
+  <title>NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -14,9 +14,9 @@
     <aside class="sidebar">
       <div class="brand-block">
         <p class="eyebrow">model spotlight</p>
-        <h1>Nemotron 3 Nano 30B A3B MXFP4 MoE</h1>
+        <h1>NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf</h1>
         <p class="sidebar-copy">
-          Dedicated summary page for the RTX 3060 fusion-build sweep, including native 262k, 524k YaRN, long retrieval, and tool/reasoning behavior.
+          Dedicated summary page for the exact RTX 3060 fusion-build sweep on <code>NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf</code>, including native 262k, 524k YaRN, long retrieval, and separate reasoning-on checks.
         </p>
       </div>
       <section class="nav-panel">
@@ -40,7 +40,7 @@
           <p class="eyebrow">Fusion sweep recap</p>
           <h2>Native 262k winner plus a real 524k YaRN keep</h2>
           <p>
-            This Nemotron family behaved more like the stronger Qwen 3.6 MXFP4 MoE lanes than the older Nemotron IQ4/NVFP4 paths. It held roughly <strong>26 tok/s decode</strong> from 32k through native 262k, then stayed in the same band through 393k and 524k YaRN with the no-cache long-context setup.
+            This page is for the exact tested file <strong>NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf</strong>. It is not the separate Omni/Reasoning GGUF line. In the main matrix, the server ran with <strong>thinking off</strong>, and this model behaved more like the stronger Qwen 3.6 MXFP4 MoE lanes than the older Nemotron IQ4/NVFP4 paths. It held roughly <strong>26 tok/s decode</strong> from 32k through native 262k, then stayed in the same band through 393k and 524k YaRN with the no-cache long-context setup.
           </p>
         </div>
         <div class="summary-grid">
@@ -58,6 +58,11 @@
             <span>Best long retrieval</span>
             <strong>`q4_0 / q4_0` @ 131k</strong>
             <p class="muted">Passed at 115,395 prompt tokens, 49.69 / 15.16</p>
+          </article>
+          <article class="summary-card">
+            <span>Reasoning mode</span>
+            <strong>Tested separately with thinking on</strong>
+            <p class="muted">Budgets 64, 256, and 512 all returned visible final content</p>
           </article>
           <article class="summary-card">
             <span>Tooling</span>
@@ -238,6 +243,8 @@
         <ul>
           <li>JSON mode passed on <code>q4_0 / q4_0</code> at 65k.</li>
           <li>Tool calling passed: it emitted one clean <code>sum_numbers</code> function call.</li>
+          <li>The main matrix lanes were run with <code>thinking = 0</code> in the chat template.</li>
+          <li>Reasoning was tested separately with thinking on at budgets <code>64</code>, <code>256</code>, and <code>512</code>.</li>
           <li>Prompt-cache reuse passed hard: second prompt phase dropped to about <code>1104 ms</code> with <code>12,394</code> cached tokens.</li>
           <li>Reasoning passed on <code>turbo3 / q8_0</code> at budgets <code>64</code>, <code>256</code>, and <code>512</code>, with visible final content still present.</li>
           <li>Speculative profiles are not ready here. <code>code-safe</code>, <code>code-fast</code>, <code>repeat</code>, and <code>moe</code> all failed with <code>Invalid input batch</code>.</li>

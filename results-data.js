@@ -3004,13 +3004,13 @@ window.FUSION_RESULTS = {
     },
     {
       id: "nemotron-3-nano-30b-a3b-mxfp4-moe",
-      name: "Nemotron 3 Nano 30B A3B MXFP4 MoE",
-      shortName: "Nemotron Nano 30B",
+      name: "NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf",
+      shortName: "NVIDIA Nemotron 30B",
       architecture: "Nemotron / MXFP4 MoE",
       status: "Experimental but usable",
       source: "noctrex/Nemotron-3-Nano-30B-A3B-MXFP4_MOE-GGUF",
       summary:
-        "This family behaved more like the stronger Qwen 3.6 MoE lanes than the older Nemotron tests. Decode stayed in the 26 tok/s band from 32k through native 262k and remained there through 393k and 524k YaRN, but the logic suite stayed uneven and speculative profiles are still broken.",
+        "This family entry is for the exact tested GGUF file NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf, not the separate Omni/Reasoning GGUF line. The main matrix was run with thinking off, and a separate reasoning-on pass was run afterward. Decode stayed in the 26 tok/s band from 32k through native 262k and remained there through 393k and 524k YaRN, but the logic suite stayed uneven and speculative profiles are still broken.",
       highlights: [
         "The best native keep is turbo3 / q8_0 at 262144 with about 47.77 / 26.15 and 3 / 5 logic.",
         "YaRN extension held up unusually well here, with a usable 524288 q8_0 / q8_0 lane at about 45.06 / 26.26.",
@@ -3047,12 +3047,12 @@ window.FUSION_RESULTS = {
       models: [
         {
           id: "nemotron-3-nano-30b-a3b-mxfp4-moe-main",
-          name: "MXFP4 MoE",
+          name: "NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf",
           size: "30B total / 3B active",
           status: "Experimental but usable",
           sourceFile: "NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf",
           summary:
-            "The main surprise here is consistency. Once cpu-moe is enabled, this model holds decode in the mid-26 tok/s range almost regardless of context size, including the 524k YaRN extension, while keeping native JSON and tool calls alive.",
+            "The main surprise here is consistency. Once cpu-moe is enabled, this exact GGUF holds decode in the mid-26 tok/s range almost regardless of context size, including the 524k YaRN extension, while keeping native JSON and tool calls alive. The base matrix used thinking off, then a separate reasoning-on check validated visible final content at multiple budgets.",
           recommendedPreset: {
             alias: "nemotron-3-nano-30b-a3b-mxfp4-moe-262k",
             cache: "turbo3 / q8_0",
@@ -3218,7 +3218,7 @@ window.FUSION_RESULTS = {
             {
               test: "Reasoning path",
               result: "pass",
-              notes: "Reasoning stayed stable at budgets 64, 256, and 512 with visible final content present."
+              notes: "The main matrix used thinking off. A separate reasoning-on pass stayed stable at budgets 64, 256, and 512 with visible final content present."
             },
             {
               test: "Cache reuse",
