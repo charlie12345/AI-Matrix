@@ -3247,11 +3247,11 @@ window.FUSION_RESULTS = {
       status: "Experimental but usable",
       source: "unsloth/NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-GGUF",
       summary:
-        "This family entry is for the exact tested GGUF file NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf. The broad matrix was run with reasoning off, and the dedicated reasoning pass was run separately with reasoning on. On the RTX 3060 path it stayed above the 18 tok/s goal comfortably, landing around 22 to 23 tok/s decode on the strongest native and YaRN lanes all the way through 524k.",
+        "This family entry is for the exact tested GGUF file NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf. The broad matrix was run with reasoning off, and the dedicated reasoning passes were then run separately with reasoning on at 65k, 262k, and 524k YaRN. On the RTX 3060 path it stayed above the 18 tok/s goal comfortably, landing around 21 to 23 tok/s decode on both the reasoning-off and reasoning-on long-context lanes.",
       highlights: [
         "The clean native keep is q8_0 / turbo3 at 262144 with about 42.05 / 23.14 and 3 / 5 logic.",
         "The long-context YaRN keep is q8_0 / q8_0 at 524288 with about 37.56 / 21.98 and 3 / 5 logic.",
-        "Reasoning on stayed usable at budgets 64, 256, and 512 with visible final content for both math and code probes.",
+        "Reasoning on stayed usable at 65k, 262k, and 524k YaRN with visible final content for both math and code probes.",
         "The speculative profiles still are not promotable: code-safe, code-fast, and repeat break on this branch too."
       ],
       recommended: [
@@ -3267,8 +3267,8 @@ window.FUSION_RESULTS = {
         },
         {
           label: "Reasoning-on keep",
-          value: "turbo3 / q8_0, ctx 65536, 64 / 32",
-          supporting: "Visible final content at budgets 64, 256, and 512"
+          value: "q8_0 / turbo3, ctx 262144, 16 / 16",
+          supporting: "Visible final content at budgets 64, 256, and 512 with about 21.12 to 22.17 decode"
         },
         {
           label: "Current blocker before promotion",
@@ -3289,7 +3289,7 @@ window.FUSION_RESULTS = {
           status: "Experimental but usable",
           sourceFile: "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf",
           summary:
-            "This Omni/Reasoning variant behaves more like the stronger Qwen 3.6 MoE lanes than the older Nemotron experiments. The base matrix was run with reasoning off, and the separate reasoning-on sweep held visible content and stable decode around 22 tok/s. The family comfortably clears the 18 tok/s target through native 262k and through the tested 524k YaRN lane.",
+            "This Omni/Reasoning variant behaves more like the stronger Qwen 3.6 MoE lanes than the older Nemotron experiments. The base matrix was run with reasoning off, and separate reasoning-on sweeps at 65k, 262k, and 524k all held visible content with stable decode around 21 to 22 tok/s. The family comfortably clears the 18 tok/s target through native 262k and through the tested 524k YaRN lane in both modes.",
           recommendedPreset: {
             alias: "candidate only: q8_0 / turbo3 @ 262144",
             cache: "q8_0 / turbo3",
@@ -3319,8 +3319,8 @@ window.FUSION_RESULTS = {
             },
             {
               label: "Reasoning-on decode band",
-              value: "21.99 to 22.37",
-              note: "turbo3 / q8_0 at 65536 across budgets 64, 256, and 512 only; no 262k or 524k reasoning-on pass was completed"
+              value: "20.98 to 22.36",
+              note: "Across 65536, 262144, and 524288 reasoning-on probes at budgets 64, 256, and 512"
             }
           ],
           kvMatrix: [
@@ -3435,7 +3435,7 @@ window.FUSION_RESULTS = {
               decode: "21.19",
               reasoningLen: "216",
               result: "pass",
-              notes: "Visible final content present at 65536 only. No 262k or 524k reasoning-on pass was completed."
+              notes: "Visible final content present at 65536."
             },
             {
               mode: "reasoning on",
@@ -3488,6 +3488,138 @@ window.FUSION_RESULTS = {
               ctx: "65536",
               prompt: "25.18",
               decode: "21.99",
+              reasoningLen: "115",
+              result: "pass",
+              notes: "Visible final code returned again."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "64",
+              ctx: "262144",
+              prompt: "38.77",
+              decode: "21.96",
+              reasoningLen: "114",
+              result: "pass",
+              notes: "Visible final content present on the native 262k winner."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "64",
+              ctx: "262144",
+              prompt: "37.68",
+              decode: "21.44",
+              reasoningLen: "119",
+              result: "pass",
+              notes: "Visible final code returned on the native 262k winner."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "256",
+              ctx: "262144",
+              prompt: "40.24",
+              decode: "22.17",
+              reasoningLen: "114",
+              result: "pass",
+              notes: "Stable at the larger native context."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "256",
+              ctx: "262144",
+              prompt: "39.93",
+              decode: "22.16",
+              reasoningLen: "119",
+              result: "pass",
+              notes: "Visible final code returned again."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "512",
+              ctx: "262144",
+              prompt: "40.18",
+              decode: "21.12",
+              reasoningLen: "114",
+              result: "pass",
+              notes: "Reasoning trace remained stable with visible final answer."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "512",
+              ctx: "262144",
+              prompt: "39.58",
+              decode: "22.07",
+              reasoningLen: "119",
+              result: "pass",
+              notes: "Visible final code returned again."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "64",
+              ctx: "524288 yarn",
+              prompt: "37.70",
+              decode: "22.23",
+              reasoningLen: "114",
+              result: "pass",
+              notes: "Visible final content present on the 524k YaRN keep."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "64",
+              ctx: "524288 yarn",
+              prompt: "38.21",
+              decode: "22.36",
+              reasoningLen: "115",
+              result: "pass",
+              notes: "Visible final code returned on the 524k YaRN keep."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "256",
+              ctx: "524288 yarn",
+              prompt: "37.93",
+              decode: "22.27",
+              reasoningLen: "114",
+              result: "pass",
+              notes: "Stable at the over-train context window."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "256",
+              ctx: "524288 yarn",
+              prompt: "37.91",
+              decode: "22.26",
+              reasoningLen: "115",
+              result: "pass",
+              notes: "Visible final code returned again."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "512",
+              ctx: "524288 yarn",
+              prompt: "37.98",
+              decode: "22.34",
+              reasoningLen: "114",
+              result: "pass",
+              notes: "Reasoning trace remained stable with visible final answer."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "512",
+              ctx: "524288 yarn",
+              prompt: "38.28",
+              decode: "20.98",
               reasoningLen: "115",
               result: "pass",
               notes: "Visible final code returned again."
@@ -3566,7 +3698,7 @@ window.FUSION_RESULTS = {
             {
               test: "Reasoning-on path",
               result: "pass",
-              notes: "Budgets 64, 256, and 512 all returned visible final content for both math and code probes, but this was only at 65536 context."
+              notes: "Budgets 64, 256, and 512 all returned visible final content for both math and code probes at 65536, 262144, and 524288 yarn."
             },
             {
               test: "Logic misses",
