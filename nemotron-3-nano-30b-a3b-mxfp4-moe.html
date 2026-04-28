@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="color-scheme" content="dark">
+  <title>Nemotron 3 Nano 30B A3B MXFP4 MoE</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <p class="eyebrow">model spotlight</p>
+        <h1>Nemotron 3 Nano 30B A3B MXFP4 MoE</h1>
+        <p class="sidebar-copy">
+          Dedicated summary page for the RTX 3060 fusion-build sweep, including native 262k, 524k YaRN, long retrieval, and tool/reasoning behavior.
+        </p>
+      </div>
+      <section class="nav-panel">
+        <div class="panel-header">
+          <p class="panel-title">Jump</p>
+          <a href="./index.html" class="mini-link">Back to dashboard</a>
+        </div>
+        <nav class="family-nav">
+          <a class="family-link" href="#summary"><span>Summary</span><span class="nav-badge status-stable-today">Stable today</span></a>
+          <a class="family-link" href="#winners"><span>Winning Presets</span></a>
+          <a class="family-link" href="#yarn"><span>YaRN Results</span></a>
+          <a class="family-link" href="#logic"><span>Logic Misses</span></a>
+          <a class="family-link" href="#edge"><span>Edge Checks</span></a>
+        </nav>
+      </section>
+    </aside>
+
+    <main class="content">
+      <section class="card hero" id="summary">
+        <div class="hero-copy">
+          <p class="eyebrow">Fusion sweep recap</p>
+          <h2>Native 262k winner plus a real 524k YaRN keep</h2>
+          <p>
+            This Nemotron family behaved more like the stronger Qwen 3.6 MXFP4 MoE lanes than the older Nemotron IQ4/NVFP4 paths. It held roughly <strong>26 tok/s decode</strong> from 32k through native 262k, then stayed in the same band through 393k and 524k YaRN with the no-cache long-context setup.
+          </p>
+        </div>
+        <div class="summary-grid">
+          <article class="summary-card">
+            <span>Native keep</span>
+            <strong>`turbo3 / q8_0` @ 262k</strong>
+            <p class="muted">47.77 prompt / 26.15 decode, 3/5 logic</p>
+          </article>
+          <article class="summary-card">
+            <span>Long-context keep</span>
+            <strong>`q8_0 / q8_0` @ 524k YaRN</strong>
+            <p class="muted">45.06 prompt / 26.26 decode, 2/5 logic</p>
+          </article>
+          <article class="summary-card">
+            <span>Best long retrieval</span>
+            <strong>`q4_0 / q4_0` @ 131k</strong>
+            <p class="muted">Passed at 115,395 prompt tokens, 49.69 / 15.16</p>
+          </article>
+          <article class="summary-card">
+            <span>Tooling</span>
+            <strong>JSON + tool calls work</strong>
+            <p class="muted">Native tool call parsed, cache reuse hit 12,394 cached tokens</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" id="winners">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Winning presets</p>
+            <h2>Native Context Winners</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Preset</th>
+                <th>Context</th>
+                <th>Batch</th>
+                <th>Prompt tok/s</th>
+                <th>Decode tok/s</th>
+                <th>Logic</th>
+                <th>Why keep it</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>q4_0 / q4_0</code> + <code>n-cpu-moe=8</code></td>
+                <td>32768</td>
+                <td>64 / 32</td>
+                <td>29.91</td>
+                <td>26.38</td>
+                <td>2 / 5</td>
+                <td>Fastest short-lane code decode</td>
+              </tr>
+              <tr>
+                <td><code>q8_0 / q8_0</code></td>
+                <td>65536</td>
+                <td>64 / 32</td>
+                <td>29.38</td>
+                <td>26.38</td>
+                <td>2 / 5</td>
+                <td>Cleanest simple 65k stock keep</td>
+              </tr>
+              <tr>
+                <td><code>q4_0 / q4_0</code> + <code>n-cpu-moe=8</code></td>
+                <td>131072</td>
+                <td>32 / 16</td>
+                <td>48.67</td>
+                <td>26.21</td>
+                <td>2 / 5</td>
+                <td>Best 131k code-path decode</td>
+              </tr>
+              <tr>
+                <td><code>turbo3 / q8_0</code></td>
+                <td>262144</td>
+                <td>16 / 16</td>
+                <td>47.77</td>
+                <td>26.15</td>
+                <td>3 / 5</td>
+                <td>Best native 262k overall keep</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" id="yarn">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Extended context</p>
+            <h2>YaRN Results</h2>
+          </div>
+        </div>
+        <p class="muted">
+          These lanes used the Qwen-style long-context setup that mattered here: <code>cache-ram=0</code>, <code>ctx-checkpoints=0</code>, and explicit YaRN scaling from the native 262k train context.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Preset</th>
+                <th>Context</th>
+                <th>Batch</th>
+                <th>Prompt tok/s</th>
+                <th>Decode tok/s</th>
+                <th>Logic</th>
+                <th>Verdict</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>q8_0 / q8_0</code></td>
+                <td>393216</td>
+                <td>16 / 8</td>
+                <td>45.33</td>
+                <td>26.30</td>
+                <td>2 / 5</td>
+                <td>Best 393k direct extension keep</td>
+              </tr>
+              <tr>
+                <td><code>q8_0 / turbo2</code></td>
+                <td>393216</td>
+                <td>16 / 8</td>
+                <td>45.23</td>
+                <td>26.15</td>
+                <td>0 / 5</td>
+                <td>Fast, but logic degraded too far</td>
+              </tr>
+              <tr>
+                <td><code>turbo3 / q8_0</code></td>
+                <td>393216</td>
+                <td>16 / 8</td>
+                <td>43.79</td>
+                <td>26.10</td>
+                <td>3 / 5</td>
+                <td>Best 393k logic lane</td>
+              </tr>
+              <tr>
+                <td><code>q8_0 / q8_0</code></td>
+                <td>524288</td>
+                <td>8 / 8</td>
+                <td>45.06</td>
+                <td>26.26</td>
+                <td>2 / 5</td>
+                <td>Chosen 524k public keep</td>
+              </tr>
+              <tr>
+                <td><code>q8_0 / turbo2</code></td>
+                <td>524288</td>
+                <td>8 / 8</td>
+                <td>45.08</td>
+                <td>26.24</td>
+                <td>0 / 5</td>
+                <td>Fast, but logic too weak</td>
+              </tr>
+              <tr>
+                <td><code>turbo3 / q8_0</code></td>
+                <td>524288</td>
+                <td>8 / 8</td>
+                <td>43.58</td>
+                <td>26.34</td>
+                <td>3 / 5</td>
+                <td>Fastest 524k code decode, but lower prompt speed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" id="logic">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Hidden-answer suite</p>
+            <h2>Repeated Logic Misses</h2>
+          </div>
+        </div>
+        <ul>
+          <li><code>semantic_interference</code>: common failure. The model kept saying the feather would hit the ceiling first instead of the bowling ball.</li>
+          <li><code>myopic_planning</code>: weaker stock lanes missed that the meeting schedule is impossible. Stronger <code>turbo3 / q8_0</code> lanes recovered this.</li>
+          <li><code>vowels_i_count</code>: common failure. It kept reporting the distinct vowels correctly, but overcounted the letter <code>i</code> as <code>3</code>.</li>
+          <li><code>sally_anne</code>: passed on the stronger lanes.</li>
+          <li><code>vibepass_bugfix</code>: passed on the stronger lanes.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="edge">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Fusion features</p>
+            <h2>Edge and Runtime Checks</h2>
+          </div>
+        </div>
+        <ul>
+          <li>JSON mode passed on <code>q4_0 / q4_0</code> at 65k.</li>
+          <li>Tool calling passed: it emitted one clean <code>sum_numbers</code> function call.</li>
+          <li>Prompt-cache reuse passed hard: second prompt phase dropped to about <code>1104 ms</code> with <code>12,394</code> cached tokens.</li>
+          <li>Reasoning passed on <code>turbo3 / q8_0</code> at budgets <code>64</code>, <code>256</code>, and <code>512</code>, with visible final content still present.</li>
+          <li>Speculative profiles are not ready here. <code>code-safe</code>, <code>code-fast</code>, <code>repeat</code>, and <code>moe</code> all failed with <code>Invalid input batch</code>.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -9,7 +9,7 @@ window.FUSION_RESULTS = {
     cpu: "Intel Core i5-8400 (6C / 6T)",
     gpu: "RTX 3060 12 GB",
     ram: "46 GiB DDR4",
-    updated: "2026-04-27",
+    updated: "2026-04-28",
     summary:
       "A browsable benchmark site for the custom fusion llama.cpp stack. It tracks real winners, long-context rescue lanes, fresh APEX-family results, and the edge-case failures that decide whether a preset is safe to promote.",
     links: [
@@ -2997,6 +2997,243 @@ window.FUSION_RESULTS = {
               test: "Long retrieval ladder",
               result: "risk",
               notes: "131k passed, but the 262k retrieval pass did not finish inside the current 900 second harness budget on the RTX 3060 path."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "nemotron-3-nano-30b-a3b-mxfp4-moe",
+      name: "Nemotron 3 Nano 30B A3B MXFP4 MoE",
+      shortName: "Nemotron Nano 30B",
+      architecture: "Nemotron / MXFP4 MoE",
+      status: "Experimental but usable",
+      source: "noctrex/Nemotron-3-Nano-30B-A3B-MXFP4_MOE-GGUF",
+      summary:
+        "This family behaved more like the stronger Qwen 3.6 MoE lanes than the older Nemotron tests. Decode stayed in the 26 tok/s band from 32k through native 262k and remained there through 393k and 524k YaRN, but the logic suite stayed uneven and speculative profiles are still broken.",
+      highlights: [
+        "The best native keep is turbo3 / q8_0 at 262144 with about 47.77 / 26.15 and 3 / 5 logic.",
+        "YaRN extension held up unusually well here, with a usable 524288 q8_0 / q8_0 lane at about 45.06 / 26.26.",
+        "JSON mode, tool calls, and prompt-cache reuse all worked on the edge checks.",
+        "All draftless speculative profiles failed with Invalid input batch, so this family is not ready for speculative promotion."
+      ],
+      recommended: [
+        {
+          label: "Best native keep",
+          value: "turbo3 / q8_0, ctx 262144, 16 / 16",
+          supporting: "3 / 5 logic, about 47.77 / 26.15"
+        },
+        {
+          label: "Best long-context keep",
+          value: "q8_0 / q8_0, ctx 524288 yarn, 8 / 8",
+          supporting: "2 / 5 logic, about 45.06 / 26.26"
+        },
+        {
+          label: "Best completed retrieval pass",
+          value: "q4_0 / q4_0, ctx 131072, 32 / 16",
+          supporting: "Pass at 115395 prompt tokens, about 49.69 / 15.16"
+        },
+        {
+          label: "Current blocker before wider promotion",
+          value: "logic misses and broken speculation",
+          supporting: "semantic_interference and vowels_i_count keep failing, and all speculative profiles error out"
+        }
+      ],
+      links: [
+        { label: "Dedicated Page", href: "./nemotron-3-nano-30b-a3b-mxfp4-moe.html" },
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
+      ],
+      models: [
+        {
+          id: "nemotron-3-nano-30b-a3b-mxfp4-moe-main",
+          name: "MXFP4 MoE",
+          size: "30B total / 3B active",
+          status: "Experimental but usable",
+          sourceFile: "NVIDIA-Nemotron-3-Nano-30B-A3B-MXFP4_MOE.gguf",
+          summary:
+            "The main surprise here is consistency. Once cpu-moe is enabled, this model holds decode in the mid-26 tok/s range almost regardless of context size, including the 524k YaRN extension, while keeping native JSON and tool calls alive.",
+          recommendedPreset: {
+            alias: "nemotron-3-nano-30b-a3b-mxfp4-moe-262k",
+            cache: "turbo3 / q8_0",
+            context: "262144",
+            batch: "16 / 16",
+            fitTarget: "1024",
+            logic: "3 / 5",
+            promptTps: "47.77",
+            decodeTps: "26.15",
+            note: "Best promoted native preset. Use the -tools alias in WebUI when the goal is MCP or native tool execution."
+          },
+          highlightMetrics: [
+            {
+              label: "Best short direct lane",
+              value: "29.91 / 26.38",
+              note: "q4_0 / q4_0 at 32768 with n-cpu-moe = 8"
+            },
+            {
+              label: "Best native 262k keep",
+              value: "47.77 / 26.15",
+              note: "turbo3 / q8_0 at 262144 and 16 / 16"
+            },
+            {
+              label: "Best 524k keep",
+              value: "45.06 / 26.26",
+              note: "q8_0 / q8_0 at 524288 yarn and 8 / 8"
+            },
+            {
+              label: "Biggest runtime win",
+              value: "tool calls and cache reuse",
+              note: "Parsed one clean tool call and dropped the second cache prompt to about 1104 ms"
+            }
+          ],
+          kvMatrix: [
+            {
+              shape: "q4_0 / q4_0",
+              ctx: "32768",
+              batch: "64 / 32",
+              logic: "2 / 5",
+              prompt: "29.91",
+              decode: "26.38",
+              verdict: "best short lane",
+              notes: "Needed cpu-moe with n-cpu-moe = 8."
+            },
+            {
+              shape: "q8_0 / q8_0",
+              ctx: "65536",
+              batch: "64 / 32",
+              logic: "2 / 5",
+              prompt: "29.38",
+              decode: "26.38",
+              verdict: "safe alternative",
+              notes: "Clean simple 65k stock keep."
+            },
+            {
+              shape: "q4_0 / q4_0",
+              ctx: "131072",
+              batch: "32 / 16",
+              logic: "2 / 5",
+              prompt: "48.67",
+              decode: "26.21",
+              verdict: "strong alternative",
+              notes: "Best 131k code-path decode, again with n-cpu-moe = 8."
+            },
+            {
+              shape: "turbo3 / q8_0",
+              ctx: "262144",
+              batch: "16 / 16",
+              logic: "3 / 5",
+              prompt: "47.77",
+              decode: "26.15",
+              verdict: "winner",
+              notes: "Best promoted native preset."
+            },
+            {
+              shape: "q8_0 / q8_0",
+              ctx: "524288 yarn",
+              batch: "8 / 8",
+              logic: "2 / 5",
+              prompt: "45.06",
+              decode: "26.26",
+              verdict: "best extension lane",
+              notes: "Chosen public long-context keep."
+            }
+          ],
+          longContext: [
+            {
+              shape: "q4_0 / q4_0",
+              ctx: "131072",
+              batch: "32 / 16",
+              fitTarget: "1024",
+              prompt: "49.69",
+              decode: "15.16",
+              result: "retrieval pass at 115395 prompt tokens"
+            },
+            {
+              shape: "q8_0 / q8_0",
+              ctx: "393216 yarn",
+              batch: "16 / 8",
+              fitTarget: "2048",
+              prompt: "45.33",
+              decode: "26.30",
+              result: "best 393k extension keep"
+            },
+            {
+              shape: "q8_0 / q8_0",
+              ctx: "524288 yarn",
+              batch: "8 / 8",
+              fitTarget: "2048",
+              prompt: "45.06",
+              decode: "26.26",
+              result: "best 524k extension keep"
+            }
+          ],
+          speculation: [
+            {
+              profile: "none",
+              decode: "23.61",
+              acceptance: "n/a",
+              verdict: "baseline",
+              notes: "q4_0 / q4_0 repeated code-rewrite bench without speculation."
+            },
+            {
+              profile: "code-safe",
+              decode: "n/a",
+              acceptance: "n/a",
+              verdict: "broken",
+              notes: "Failed with Invalid input batch."
+            },
+            {
+              profile: "code-fast",
+              decode: "n/a",
+              acceptance: "n/a",
+              verdict: "broken",
+              notes: "Failed with Invalid input batch."
+            },
+            {
+              profile: "repeat",
+              decode: "n/a",
+              acceptance: "n/a",
+              verdict: "broken",
+              notes: "Failed with Invalid input batch."
+            },
+            {
+              profile: "moe",
+              decode: "n/a",
+              acceptance: "n/a",
+              verdict: "broken",
+              notes: "Failed with Invalid input batch."
+            }
+          ],
+          edgeCases: [
+            {
+              test: "JSON mode",
+              result: "pass",
+              notes: "Returned clean JSON in the edge lane."
+            },
+            {
+              test: "Tool calling",
+              result: "pass",
+              notes: "Parsed one tool call cleanly: sum_numbers."
+            },
+            {
+              test: "Reasoning path",
+              result: "pass",
+              notes: "Reasoning stayed stable at budgets 64, 256, and 512 with visible final content present."
+            },
+            {
+              test: "Cache reuse",
+              result: "pass",
+              notes: "Prompt time dropped from 369287.947 ms to 1104.337 ms with 12394 cached tokens."
+            },
+            {
+              test: "Speculative profiles",
+              result: "fail",
+              notes: "code-safe, code-fast, repeat, and moe all failed with Invalid input batch."
+            },
+            {
+              test: "Long retrieval ladder",
+              result: "pass",
+              notes: "131k retrieval passed cleanly on q4_0 / q4_0."
             }
           ]
         }
