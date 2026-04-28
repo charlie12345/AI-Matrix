@@ -353,6 +353,29 @@
     );
   }
 
+  function renderReasoningTable(items) {
+    if (!items || !items.length) {
+      return "";
+    }
+
+    return (
+      '<section class="table-block">' +
+      '<div class="table-title"><h4>Reasoning Modes</h4></div>' +
+      renderTable([
+        { label: "Mode", key: "mode", type: "badge" },
+        { label: "Probe", key: "probe" },
+        { label: "Budget", key: "budget" },
+        { label: "ctx", key: "ctx" },
+        { label: "Prompt", key: "prompt" },
+        { label: "Decode", key: "decode" },
+        { label: "Reasoning len", key: "reasoningLen" },
+        { label: "Result", key: "result", type: "badge" },
+        { label: "Notes", key: "notes" }
+      ], items) +
+      "</section>"
+    );
+  }
+
   function renderModel(model) {
     return (
       '<article class="model-card" id="' + escapeHtml(model.id) + '">' +
@@ -403,6 +426,7 @@
         { label: "Result", key: "result", type: "badge" }
       ], model.longContext) +
       "</section>" +
+      renderReasoningTable(model.reasoningModes) +
       '<section class="table-block">' +
       '<div class="table-title"><h4>Speculation</h4></div>' +
       renderTable([

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="color-scheme" content="dark">
+  <title>NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <p class="eyebrow">model spotlight</p>
+        <h1>NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf</h1>
+        <p class="sidebar-copy">
+          Dedicated summary page for the exact fusion-build sweep on <code>NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf</code>, with the main matrix run under <strong>reasoning off</strong> and the follow-up stability check run under <strong>reasoning on</strong>.
+        </p>
+      </div>
+      <section class="nav-panel">
+        <div class="panel-header">
+          <p class="panel-title">Jump</p>
+          <a href="./index.html" class="mini-link">Back to dashboard</a>
+        </div>
+        <nav class="family-nav">
+          <a class="family-link" href="#summary"><span>Summary</span><span class="nav-badge status-stable-today">Stable today</span></a>
+          <a class="family-link" href="#native"><span>Reasoning Off</span></a>
+          <a class="family-link" href="#reasoning"><span>Reasoning On</span></a>
+          <a class="family-link" href="#yarn"><span>524k YaRN</span></a>
+          <a class="family-link" href="#logic"><span>Logic Misses</span></a>
+          <a class="family-link" href="#spec"><span>Speculation</span></a>
+        </nav>
+      </section>
+    </aside>
+
+    <main class="content">
+      <section class="card hero" id="summary">
+        <div class="hero-copy">
+          <p class="eyebrow">Fusion sweep recap</p>
+          <h2>Real Omni rerun, split cleanly by reasoning mode</h2>
+          <p>
+            This page is for the exact tested file <strong>NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf</strong> from the Unsloth Omni/Reasoning repo. The throughput matrix was run with <strong>reasoning off</strong> so the native and YaRN numbers are directly comparable, then the same family was rechecked with <strong>reasoning on</strong> at budgets <code>64</code>, <code>256</code>, and <code>512</code>. On this RTX 3060 path it stayed comfortably above the 18 tok/s target all the way through the tested <strong>524k YaRN</strong> lane.
+          </p>
+        </div>
+        <div class="summary-grid">
+          <article class="summary-card">
+            <span>Best native keep</span>
+            <strong><code>q8_0 / turbo3</code> @ 262k</strong>
+            <p class="muted">42.05 prompt / 23.14 decode, 3 / 5 logic, reasoning off</p>
+          </article>
+          <article class="summary-card">
+            <span>Best short keep</span>
+            <strong><code>q8_0 / turbo2</code> @ 65k</strong>
+            <p class="muted">28.00 prompt / 23.09 decode, 3 / 5 logic, reasoning off</p>
+          </article>
+          <article class="summary-card">
+            <span>Best 524k keep</span>
+            <strong><code>q8_0 / q8_0</code> @ 524k YaRN</strong>
+            <p class="muted">37.56 prompt / 21.98 decode, 3 / 5 logic, reasoning off</p>
+          </article>
+          <article class="summary-card">
+            <span>Reasoning-on band</span>
+            <strong>21.19 to 22.37 decode</strong>
+            <p class="muted">Visible final math and code content at budgets 64, 256, and 512</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" id="native">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Main matrix</p>
+            <h2>Reasoning Off Results</h2>
+          </div>
+        </div>
+        <p class="muted">
+          These are the direct throughput and logic rows from the main matrix. This phase used <code>--reasoning off</code>.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Preset</th>
+                <th>Context</th>
+                <th>Batch</th>
+                <th>Prompt tok/s</th>
+                <th>Decode tok/s</th>
+                <th>Logic</th>
+                <th>Verdict</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>q8_0 / turbo2</code></td>
+                <td>65536</td>
+                <td>64 / 32</td>
+                <td>28.00</td>
+                <td>23.09</td>
+                <td>3 / 5</td>
+                <td>Best short keep</td>
+              </tr>
+              <tr>
+                <td><code>q4_0 / q4_0</code> + <code>n-cpu-moe=8</code></td>
+                <td>131072</td>
+                <td>32 / 16</td>
+                <td>42.43</td>
+                <td>22.18</td>
+                <td>3 / 5</td>
+                <td>Best 131k decode lane</td>
+              </tr>
+              <tr>
+                <td><code>q8_0 / turbo3</code></td>
+                <td>262144</td>
+                <td>16 / 16</td>
+                <td>42.05</td>
+                <td>23.14</td>
+                <td>3 / 5</td>
+                <td>Best native keep</td>
+              </tr>
+              <tr>
+                <td><code>q8_0 / turbo2</code> no-cache</td>
+                <td>262144</td>
+                <td>16 / 16</td>
+                <td>43.35</td>
+                <td>23.10</td>
+                <td>2 / 5</td>
+                <td>Faster, but not as clean</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" id="reasoning">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Follow-up pass</p>
+            <h2>Reasoning On Results</h2>
+          </div>
+        </div>
+        <p class="muted">
+          This phase used <code>turbo3 / q8_0</code> at <code>65536</code> with <code>--reasoning on</code>. The key check here was whether the model still returned visible final content, not just reasoning traces.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Probe</th>
+                <th>Budget</th>
+                <th>Prompt tok/s</th>
+                <th>Decode tok/s</th>
+                <th>Reasoning len</th>
+                <th>Final content</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Math</td>
+                <td>64</td>
+                <td>24.69</td>
+                <td>21.19</td>
+                <td>216</td>
+                <td>Pass</td>
+              </tr>
+              <tr>
+                <td>Code</td>
+                <td>64</td>
+                <td>24.64</td>
+                <td>22.37</td>
+                <td>115</td>
+                <td>Pass</td>
+              </tr>
+              <tr>
+                <td>Math</td>
+                <td>256</td>
+                <td>25.41</td>
+                <td>22.11</td>
+                <td>216</td>
+                <td>Pass</td>
+              </tr>
+              <tr>
+                <td>Code</td>
+                <td>256</td>
+                <td>25.06</td>
+                <td>22.25</td>
+                <td>115</td>
+                <td>Pass</td>
+              </tr>
+              <tr>
+                <td>Math</td>
+                <td>512</td>
+                <td>25.40</td>
+                <td>22.08</td>
+                <td>216</td>
+                <td>Pass</td>
+              </tr>
+              <tr>
+                <td>Code</td>
+                <td>512</td>
+                <td>25.18</td>
+                <td>21.99</td>
+                <td>115</td>
+                <td>Pass</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" id="yarn">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Extended context</p>
+            <h2>393k And 524k YaRN</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Preset</th>
+                <th>Context</th>
+                <th>Batch</th>
+                <th>Prompt tok/s</th>
+                <th>Decode tok/s</th>
+                <th>Logic</th>
+                <th>Verdict</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>q4_0 / q4_0</code></td>
+                <td>393216</td>
+                <td>16 / 8</td>
+                <td>37.15</td>
+                <td>23.02</td>
+                <td>3 / 5</td>
+                <td>Best 393k keep</td>
+              </tr>
+              <tr>
+                <td><code>q8_0 / q8_0</code></td>
+                <td>393216</td>
+                <td>16 / 8</td>
+                <td>38.02</td>
+                <td>21.95</td>
+                <td>3 / 5</td>
+                <td>Clean stock alternative</td>
+              </tr>
+              <tr>
+                <td><code>q8_0 / q8_0</code></td>
+                <td>524288</td>
+                <td>8 / 8</td>
+                <td>37.56</td>
+                <td>21.98</td>
+                <td>3 / 5</td>
+                <td>Chosen 524k keep</td>
+              </tr>
+              <tr>
+                <td><code>turbo3 / q8_0</code></td>
+                <td>524288</td>
+                <td>8 / 8</td>
+                <td>36.82</td>
+                <td>22.04</td>
+                <td>3 / 5</td>
+                <td>Fast 524k alternative</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" id="logic">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Hidden-answer suite</p>
+            <h2>Repeated Logic Misses</h2>
+          </div>
+        </div>
+        <ul>
+          <li><code>semantic_interference</code>: repeated failure across the stronger lanes.</li>
+          <li><code>vowels_i_count</code>: repeated failure. The model overcounted the letter <code>i</code>.</li>
+          <li><code>myopic_planning</code>: usually passed on the stronger native and YaRN keeps.</li>
+          <li><code>sally_anne</code>: passed on the stronger lanes.</li>
+          <li><code>vibepass_bugfix</code>: passed on the stronger lanes.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="spec">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Fusion features</p>
+            <h2>Speculation Status</h2>
+          </div>
+        </div>
+        <ul>
+          <li><code>none</code> baseline worked.</li>
+          <li><code>code-safe</code> failed with <code>Invalid input batch</code>.</li>
+          <li><code>code-fast</code> failed with <code>Invalid input batch</code>.</li>
+          <li><code>repeat</code> also broke on the same branch pattern.</li>
+          <li>This family is not ready for speculative promotion on this build.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -3238,6 +3238,322 @@ window.FUSION_RESULTS = {
           ]
         }
       ]
+    },
+    {
+      id: "nemotron-3-nano-omni-30b-a3b-reasoning-mxfp4-moe",
+      name: "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf",
+      shortName: "Nemotron Omni 30B",
+      architecture: "Nemotron Omni / reasoning / MXFP4_MOE",
+      status: "Experimental but usable",
+      source: "unsloth/NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-GGUF",
+      summary:
+        "This family entry is for the exact tested GGUF file NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf. The broad matrix was run with reasoning off, and the dedicated reasoning pass was run separately with reasoning on. On the RTX 3060 path it stayed above the 18 tok/s goal comfortably, landing around 22 to 23 tok/s decode on the strongest native and YaRN lanes all the way through 524k.",
+      highlights: [
+        "The clean native keep is q8_0 / turbo3 at 262144 with about 42.05 / 23.14 and 3 / 5 logic.",
+        "The long-context YaRN keep is q8_0 / q8_0 at 524288 with about 37.56 / 21.98 and 3 / 5 logic.",
+        "Reasoning on stayed usable at budgets 64, 256, and 512 with visible final content for both math and code probes.",
+        "The speculative profiles still are not promotable: code-safe, code-fast, and repeat break on this branch too."
+      ],
+      recommended: [
+        {
+          label: "Best native keep",
+          value: "q8_0 / turbo3, ctx 262144, 16 / 16",
+          supporting: "3 / 5 logic, about 42.05 / 23.14 with reasoning off"
+        },
+        {
+          label: "Best 524k keep",
+          value: "q8_0 / q8_0, ctx 524288 yarn, 8 / 8",
+          supporting: "3 / 5 logic, about 37.56 / 21.98 with reasoning off"
+        },
+        {
+          label: "Reasoning-on keep",
+          value: "turbo3 / q8_0, ctx 65536, 64 / 32",
+          supporting: "Visible final content at budgets 64, 256, and 512"
+        },
+        {
+          label: "Current blocker before promotion",
+          value: "logic misses and broken speculation",
+          supporting: "semantic_interference and vowels_i_count keep missing, and speculative profiles still fail"
+        }
+      ],
+      links: [
+        { label: "Dedicated Page", href: "./nemotron-3-nano-omni-30b-a3b-reasoning-mxfp4-moe.html" },
+        { label: "Fusion Live Matrix", href: FUSION_LIVE_MATRIX_URL },
+        { label: "Fusion Model Status", href: FUSION_MODEL_STATUS_URL }
+      ],
+      models: [
+        {
+          id: "nemotron-3-nano-omni-30b-a3b-reasoning-mxfp4-moe-main",
+          name: "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf",
+          size: "30B total / 3B active",
+          status: "Experimental but usable",
+          sourceFile: "NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf",
+          summary:
+            "This Omni/Reasoning variant behaves more like the stronger Qwen 3.6 MoE lanes than the older Nemotron experiments. The base matrix was run with reasoning off, and the separate reasoning-on sweep held visible content and stable decode around 22 tok/s. The family comfortably clears the 18 tok/s target through native 262k and through the tested 524k YaRN lane.",
+          recommendedPreset: {
+            alias: "candidate only: q8_0 / turbo3 @ 262144",
+            cache: "q8_0 / turbo3",
+            context: "262144",
+            batch: "16 / 16",
+            fitTarget: "1024",
+            logic: "3 / 5",
+            promptTps: "42.05",
+            decodeTps: "23.14",
+            note: "Best clean native lane from the real Omni rerun. This page explicitly splits reasoning-off matrix numbers from the separate reasoning-on pass."
+          },
+          highlightMetrics: [
+            {
+              label: "Best short native lane",
+              value: "28.00 / 23.09",
+              note: "q8_0 / turbo2 at 65536, 3 / 5 logic, reasoning off"
+            },
+            {
+              label: "Best native 262k keep",
+              value: "42.05 / 23.14",
+              note: "q8_0 / turbo3 at 262144, 3 / 5 logic, reasoning off"
+            },
+            {
+              label: "Best 524k YaRN keep",
+              value: "37.56 / 21.98",
+              note: "q8_0 / q8_0 at 524288, 3 / 5 logic, reasoning off"
+            },
+            {
+              label: "Reasoning-on decode band",
+              value: "21.99 to 22.37",
+              note: "turbo3 / q8_0 at 65536 across budgets 64, 256, and 512"
+            }
+          ],
+          kvMatrix: [
+            {
+              shape: "q8_0 / turbo2",
+              ctx: "65536",
+              batch: "64 / 32",
+              logic: "3 / 5",
+              prompt: "28.00",
+              decode: "23.09",
+              verdict: "best short lane",
+              notes: "Reasoning off. Strongest clean 65k keep."
+            },
+            {
+              shape: "q4_0 / q4_0 + n-cpu-moe=8",
+              ctx: "131072",
+              batch: "32 / 16",
+              logic: "3 / 5",
+              prompt: "42.43",
+              decode: "22.18",
+              verdict: "strong alternative",
+              notes: "Reasoning off. Best 131k decode lane."
+            },
+            {
+              shape: "q8_0 / turbo3",
+              ctx: "262144",
+              batch: "16 / 16",
+              logic: "3 / 5",
+              prompt: "42.05",
+              decode: "23.14",
+              verdict: "winner",
+              notes: "Reasoning off. Best clean native keep."
+            },
+            {
+              shape: "q8_0 / q8_0",
+              ctx: "524288 yarn",
+              batch: "8 / 8",
+              logic: "3 / 5",
+              prompt: "37.56",
+              decode: "21.98",
+              verdict: "best extension lane",
+              notes: "Reasoning off. Chosen public 524k keep."
+            }
+          ],
+          longContext: [
+            {
+              shape: "q4_0 / q4_0",
+              ctx: "393216 yarn",
+              batch: "16 / 8",
+              fitTarget: "1536",
+              prompt: "37.15",
+              decode: "23.02",
+              result: "best 393k extension keep"
+            },
+            {
+              shape: "q8_0 / q8_0",
+              ctx: "393216 yarn",
+              batch: "16 / 8",
+              fitTarget: "1536",
+              prompt: "38.02",
+              decode: "21.95",
+              result: "clean stock 393k alternative"
+            },
+            {
+              shape: "q8_0 / q8_0",
+              ctx: "524288 yarn",
+              batch: "8 / 8",
+              fitTarget: "2048",
+              prompt: "37.56",
+              decode: "21.98",
+              result: "best 524k extension keep"
+            },
+            {
+              shape: "turbo3 / q8_0",
+              ctx: "524288 yarn",
+              batch: "8 / 8",
+              fitTarget: "2048",
+              prompt: "36.82",
+              decode: "22.04",
+              result: "fast 524k alternative"
+            }
+          ],
+          reasoningModes: [
+            {
+              mode: "reasoning off",
+              probe: "native winner",
+              budget: "n/a",
+              ctx: "262144",
+              prompt: "42.05",
+              decode: "23.14",
+              reasoningLen: "0",
+              result: "pass",
+              notes: "q8_0 / turbo3, 3 / 5 logic. This is the best clean main-matrix lane."
+            },
+            {
+              mode: "reasoning off",
+              probe: "524k yarn keep",
+              budget: "n/a",
+              ctx: "524288",
+              prompt: "37.56",
+              decode: "21.98",
+              reasoningLen: "0",
+              result: "pass",
+              notes: "q8_0 / q8_0, 3 / 5 logic. Clears the 18 tok/s target at the tested over-train window."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "64",
+              ctx: "65536",
+              prompt: "24.69",
+              decode: "21.19",
+              reasoningLen: "216",
+              result: "pass",
+              notes: "Visible final content present: 17 plus 25 equals 42."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "64",
+              ctx: "65536",
+              prompt: "24.64",
+              decode: "22.37",
+              reasoningLen: "115",
+              result: "pass",
+              notes: "Visible final code returned for add_two."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "256",
+              ctx: "65536",
+              prompt: "25.41",
+              decode: "22.11",
+              reasoningLen: "216",
+              result: "pass",
+              notes: "Stable versus budget 64."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "256",
+              ctx: "65536",
+              prompt: "25.06",
+              decode: "22.25",
+              reasoningLen: "115",
+              result: "pass",
+              notes: "Visible final code returned again."
+            },
+            {
+              mode: "reasoning on",
+              probe: "math",
+              budget: "512",
+              ctx: "65536",
+              prompt: "25.40",
+              decode: "22.08",
+              reasoningLen: "216",
+              result: "pass",
+              notes: "Reasoning trace remained stable with visible final answer."
+            },
+            {
+              mode: "reasoning on",
+              probe: "code",
+              budget: "512",
+              ctx: "65536",
+              prompt: "25.18",
+              decode: "21.99",
+              reasoningLen: "115",
+              result: "pass",
+              notes: "Visible final code returned again."
+            }
+          ],
+          speculation: [
+            {
+              profile: "none",
+              decode: "21.51",
+              acceptance: "n/a",
+              verdict: "baseline",
+              notes: "q4_0 / q4_0 repeated code-rewrite bench at 65k."
+            },
+            {
+              profile: "code-safe",
+              decode: "n/a",
+              acceptance: "n/a",
+              verdict: "broken",
+              notes: "Failed with Invalid input batch."
+            },
+            {
+              profile: "code-fast",
+              decode: "n/a",
+              acceptance: "n/a",
+              verdict: "broken",
+              notes: "Failed with Invalid input batch."
+            },
+            {
+              profile: "repeat",
+              decode: "n/a",
+              acceptance: "n/a",
+              verdict: "broken",
+              notes: "Broke during speculative decode on the same branch pattern."
+            },
+            {
+              profile: "moe",
+              decode: "n/a",
+              acceptance: "n/a",
+              verdict: "broken",
+              notes: "Not promotable on this family."
+            }
+          ],
+          edgeCases: [
+            {
+              test: "Main matrix mode",
+              result: "pass",
+              notes: "The broad kv and YaRN matrix was run with reasoning off so the throughput numbers are clean and directly comparable."
+            },
+            {
+              test: "Reasoning-on path",
+              result: "pass",
+              notes: "Budgets 64, 256, and 512 all returned visible final content for both math and code probes."
+            },
+            {
+              test: "Logic misses",
+              result: "risk",
+              notes: "semantic_interference and vowels_i_count still miss repeatedly even on stronger lanes."
+            },
+            {
+              test: "Speculative profiles",
+              result: "fail",
+              notes: "code-safe, code-fast, and repeat are still broken here, so this family should not be promoted as a spec lane."
+            }
+          ]
+        }
+      ]
     }
   ]
 };

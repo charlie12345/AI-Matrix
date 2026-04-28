@@ -190,6 +190,7 @@ a {
 .status-promote,
 .status-winner,
 .status-retrieval-pass,
+.status-reasoning-on,
  .status-stable-compact-ceiling,
  .status-best-short-lane,
  .status-best-extension-lane {
@@ -200,6 +201,7 @@ a {
 .status-experimental-but-usable,
 .status-usable,
 .status-safe-alternative,
+.status-reasoning-off,
  .status-fallback-batch,
  .status-baseline,
  .status-strong-alternative,
