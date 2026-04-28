@@ -41,7 +41,7 @@
           <p class="eyebrow">Fusion sweep recap</p>
           <h2>Real Omni rerun, split cleanly by reasoning mode</h2>
           <p>
-            This page is for the exact tested file <strong>NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf</strong> from the Unsloth Omni/Reasoning repo. The throughput matrix was run with <strong>reasoning off</strong> so the native and YaRN numbers are directly comparable, then the same family was rechecked with <strong>reasoning on</strong> at budgets <code>64</code>, <code>256</code>, and <code>512</code>. On this RTX 3060 path it stayed comfortably above the 18 tok/s target all the way through the tested <strong>524k YaRN</strong> lane.
+            This page is for the exact tested file <strong>NVIDIA-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-MXFP4_MOE.gguf</strong> from the Unsloth Omni/Reasoning repo. The throughput matrix was run with <strong>reasoning off</strong> so the native and YaRN numbers are directly comparable, then the same family was rechecked with <strong>reasoning on</strong> at budgets <code>64</code>, <code>256</code>, and <code>512</code>. Those reasoning-on numbers are from <strong>65536 context only</strong>; there is currently <strong>no completed reasoning-on run at 262k or 524k</strong> for this family. On this RTX 3060 path the reasoning-off matrix still stayed comfortably above the 18 tok/s target all the way through the tested <strong>524k YaRN</strong> lane.
           </p>
         </div>
         <div class="summary-grid">
@@ -141,7 +141,7 @@
           </div>
         </div>
         <p class="muted">
-          This phase used <code>turbo3 / q8_0</code> at <code>65536</code> with <code>--reasoning on</code>. The key check here was whether the model still returned visible final content, not just reasoning traces.
+          This phase used <code>turbo3 / q8_0</code> at <code>65536</code> with <code>--reasoning on</code>. The key check here was whether the model still returned visible final content, not just reasoning traces. It was <strong>not</strong> rerun with reasoning on at <code>262144</code> or <code>524288</code>.
         </p>
         <div class="table-wrap">
           <table>
@@ -285,6 +285,44 @@
           <li><code>sally_anne</code>: passed on the stronger lanes.</li>
           <li><code>vibepass_bugfix</code>: passed on the stronger lanes.</li>
         </ul>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Case</th>
+                <th>What we asked</th>
+                <th>Pass rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>semantic_interference</code></td>
+                <td>Reversed-gravity bowling ball vs feather: which one hits the ceiling first?</td>
+                <td>Must commit to the bowling ball hitting the ceiling first without slipping back into normal-world gravity.</td>
+              </tr>
+              <tr>
+                <td><code>myopic_planning</code></td>
+                <td>Four 30-minute meetings between 1:00 PM and 3:00 PM, with breaks and ordering constraints.</td>
+                <td>Must explicitly say the schedule is impossible.</td>
+              </tr>
+              <tr>
+                <td><code>vowels_i_count</code></td>
+                <td>Distinct vowels in <code>extraordinarily</code> and the total count of the letter <code>i</code>.</td>
+                <td>Must give vowels <code>a, e, i, o</code> only and count <code>i</code> exactly twice.</td>
+              </tr>
+              <tr>
+                <td><code>sally_anne</code></td>
+                <td>John leaves, Sarah moves the blue key, John returns. Where does he look first?</td>
+                <td>Must say John looks in the red box for the blue key.</td>
+              </tr>
+              <tr>
+                <td><code>vibepass_bugfix</code></td>
+                <td>Find the subtle bug in <code>first_non_repeating(s)</code> where the code checks <code>counts[char] == 0</code>.</td>
+                <td>Must identify the impossible zero-count check and the correct <code>== 1</code> fix.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section class="card" id="spec">

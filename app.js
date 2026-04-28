@@ -376,6 +376,23 @@
     );
   }
 
+  function renderLogicSuite(items) {
+    if (!items || !items.length) {
+      return "";
+    }
+
+    return (
+      '<section class="table-block">' +
+      '<div class="table-title"><h4>Logic Quiz Suite</h4></div>' +
+      renderTable([
+        { label: "Case", key: "caseName" },
+        { label: "What we asked", key: "promptShort" },
+        { label: "Pass rule", key: "passRule" }
+      ], items) +
+      "</section>"
+    );
+  }
+
   function renderModel(model) {
     return (
       '<article class="model-card" id="' + escapeHtml(model.id) + '">' +
@@ -427,6 +444,7 @@
       ], model.longContext) +
       "</section>" +
       renderReasoningTable(model.reasoningModes) +
+      renderLogicSuite(model.logicSuite) +
       '<section class="table-block">' +
       '<div class="table-title"><h4>Speculation</h4></div>' +
       renderTable([

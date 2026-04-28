@@ -3320,7 +3320,7 @@ window.FUSION_RESULTS = {
             {
               label: "Reasoning-on decode band",
               value: "21.99 to 22.37",
-              note: "turbo3 / q8_0 at 65536 across budgets 64, 256, and 512"
+              note: "turbo3 / q8_0 at 65536 across budgets 64, 256, and 512 only; no 262k or 524k reasoning-on pass was completed"
             }
           ],
           kvMatrix: [
@@ -3435,7 +3435,7 @@ window.FUSION_RESULTS = {
               decode: "21.19",
               reasoningLen: "216",
               result: "pass",
-              notes: "Visible final content present: 17 plus 25 equals 42."
+              notes: "Visible final content present at 65536 only. No 262k or 524k reasoning-on pass was completed."
             },
             {
               mode: "reasoning on",
@@ -3446,7 +3446,7 @@ window.FUSION_RESULTS = {
               decode: "22.37",
               reasoningLen: "115",
               result: "pass",
-              notes: "Visible final code returned for add_two."
+              notes: "Visible final code returned for add_two at 65536 only."
             },
             {
               mode: "reasoning on",
@@ -3491,6 +3491,33 @@ window.FUSION_RESULTS = {
               reasoningLen: "115",
               result: "pass",
               notes: "Visible final code returned again."
+            }
+          ],
+          logicSuite: [
+            {
+              caseName: "semantic_interference",
+              promptShort: "Reversed-gravity bowling ball vs feather: which one hits the ceiling first?",
+              passRule: "Must commit to the bowling ball hitting the ceiling first without reverting to normal-world gravity."
+            },
+            {
+              caseName: "myopic_planning",
+              promptShort: "Four 30-minute meetings between 1:00 PM and 3:00 PM with breaks and ordering constraints.",
+              passRule: "Must explicitly say the schedule is impossible."
+            },
+            {
+              caseName: "vowels_i_count",
+              promptShort: "Distinct vowels in 'extraordinarily' and the total count of the letter i.",
+              passRule: "Must give vowels a, e, i, o only and count i exactly twice."
+            },
+            {
+              caseName: "sally_anne",
+              promptShort: "John leaves, Sarah moves the blue key, John returns. Where does he look first?",
+              passRule: "Must say John looks in the red box for the blue key."
+            },
+            {
+              caseName: "vibepass_bugfix",
+              promptShort: "Find the subtle bug in first_non_repeating(s) where the code checks counts[char] == 0.",
+              passRule: "Must identify the impossible zero-count check and the correct == 1 fix."
             }
           ],
           speculation: [
@@ -3539,7 +3566,7 @@ window.FUSION_RESULTS = {
             {
               test: "Reasoning-on path",
               result: "pass",
-              notes: "Budgets 64, 256, and 512 all returned visible final content for both math and code probes."
+              notes: "Budgets 64, 256, and 512 all returned visible final content for both math and code probes, but this was only at 65536 context."
             },
             {
               test: "Logic misses",
